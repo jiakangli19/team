@@ -1,0 +1,38 @@
+- hosts: localhost
+  become: true
+  gather_facts: true
+  vars_files:
+    - host_vars/config.yaml
+  roles:
+    - role: pre-install
+    - role: deploy-git
+    - role: deploy-docker
+    - role: deploy-frontend
+    - role: deploy-backend
+
+- name: create harvester instance
+  hosts: localhost
+  gather_facts: true
+  vars_files:
+    - host_vars/config.yaml
+  roles:
+    - role: deploy-harvester-instance
+
+- name: deploy harvester in instance 
+  hosts: harvester_instance
+  become: true
+  gather_facts: true
+  vars_files:
+    - host_vars/config.yaml
+  vars:
+    ansible_ssh_private_key_file: "{{root_path}}{{ssh_private_key_path}}" 
+    ansible_user: "{{ssh_user}}" 
+  roles:
+    - role: deploy-harvester-git
+    - role: deploy-harvester
+  
+
+
+
+
+

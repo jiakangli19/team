@@ -1,0 +1,32 @@
+- name: Stop and remove existing Vue container
+  community.docker.docker_container: 
+    name: frontend-container
+    state: absent
+    force_kill: yes
+    container_default_behavior: no_defaults
+
+- name: Remove existing Vue docker image
+  community.docker.docker_image:
+    name: frontend-image
+    state: absent
+
+- name: Build new Vue docker image
+  community.docker.docker_image:
+    name: frontend-image
+    build:
+      path: "{{root_path}}{{frontend_path}}"
+      dockerfile: "{{root_path}}{{frontend_path}}{{dockerfile_path}}"
+    source: build
+
+
+- name: Run Vue docker container
+  community.docker.docker_container:
+    name: frontend-container
+    image: frontend-image
+    state: started
+    container_default_behavior: no_defaults
+    network_mode: my-network
+    networks:
+      - name: my-network
+    published_ports:
+      - "3000:8080"

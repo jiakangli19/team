@@ -1,0 +1,28 @@
+
+- name: git clone backend
+  git:
+    repo: "{{my_backend_repo}}"
+    dest: "{{root_path}}{{backend_path}}"
+    # single_branch: yes
+    version: main
+    force: yes #rewrite
+
+- name: change file permissions for backend
+  file:
+    path: "{{root_path}}{{backend_path}}"
+    mode: '0777'
+    recurse: yes
+
+- name: git clone frontend
+  git:
+    repo: "{{my_frontend_repo}}"
+    dest: "{{root_path}}{{frontend_path}}"
+    # single_branch: yes
+    version: main
+    force: yes #rewrite
+
+- name: change file permissions for frontend
+  file:
+    path: "{{root_path}}{{frontend_path}}"
+    mode: '0777' #can read,edit,visit
+    recurse: yes

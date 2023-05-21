@@ -1,0 +1,21 @@
+- name: Install necessary packages
+  apt:
+    name:
+      - python3.11
+      - python3-pip
+      - gcc
+      - g++
+      - make
+      - openmpi-bin
+      - libopenmpi-dev
+    state: present
+
+
+- name: Install Python dependencies
+  pip:
+    requirements: "{{ root_path }}{{ harvest_path }}/requirements.txt"
+
+- name: Run the application
+  shell: mpiexec --allow-run-as-root -n 2 python3 -m mpi4py {{ root_path }}{{ harvest_path }}/Mastodon_demo.py
+
+

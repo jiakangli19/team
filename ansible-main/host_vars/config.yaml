@@ -1,0 +1,24 @@
+#sudo apt-get update
+#sudo apt-get install software-properties-common
+#sudo apt-get install ansible
+availability_zone: melbourne-qh2-uom
+instance_flavor: uom.mse.2c9g
+instance_image: bbaf16f8-2484-48d7-b455-42209cc4b8d2
+instance_key_name: cloud_key
+instance_network: qh2-uom-internal
+
+my_backend_repo: https://github.com/Comp90024-Group24/Backend.git
+my_frontend_repo: https://github.com/Comp90024-Group24/Frontend.git
+my_harvest_repo: https://github.com/Comp90024-Group24/harvester.git
+root_path: /home/ubuntu/project/
+backend_path: Backend
+frontend_path: Frontend
+harvest_path: Harvest
+
+ssh_user: ubuntu
+ssh_private_key_path: ansible/cloud_key.pem
+instances:
+  - name: harvester_instance
+
+
+dockerfile_path:  /Dockerfile

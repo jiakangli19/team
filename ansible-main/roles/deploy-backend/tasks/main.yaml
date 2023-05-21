@@ -1,0 +1,31 @@
+- name: Stop and remove existing Flask container
+  community.docker.docker_container: 
+    name: backend-container
+    state: absent
+    force_kill: yes    #stop the progress
+    container_default_behavior: no_defaults
+
+- name: Remove existing Flask docker image
+  community.docker.docker_image:
+    name: backend-image
+    state: absent
+
+- name: Build new Flask docker image
+  community.docker.docker_image:
+    name: backend-image
+    build:
+      path: "{{root_path}}{{backend_path}}"
+      dockerfile: "{{root_path}}{{backend_path}}{{dockerfile_path}}"
+    source: build
+
+- name: Run Flask docker container
+  community.docker.docker_container:
+    name: backend-container
+    image: backend-image
+    state: started
+    container_default_behavior: no_defaults
+    network_mode: my-network
+    networks:
+      - name: my-network
+    published_ports:
+      - "8000:8000"

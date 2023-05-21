@@ -1,0 +1,12 @@
+- name: Clone harvest repository
+  git:
+    repo: "{{my_harvest_repo}}"
+    dest: "{{root_path}}{{harvest_path}}"
+    version: main
+    force: yes #rewrite
+
+- name: change file permissions for harvest
+  file:
+      path: "{{root_path}}{{harvest_path}}"
+      mode: '0777'
+      recurse: yes

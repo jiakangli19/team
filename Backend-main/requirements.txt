@@ -1,0 +1,7 @@
+couchdb
+flask
+flask-restful
+flask_script
+flask_migrate
+flask-cors
+requests
